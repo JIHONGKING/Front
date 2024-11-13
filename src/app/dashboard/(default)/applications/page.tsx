@@ -1,3 +1,3 @@
 export default function Applications() {
-  return <div>Applications</div>;
+	return <div>Submitted</div>;
 }
