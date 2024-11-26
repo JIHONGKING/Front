@@ -1,92 +1,116 @@
 'use client';
 
-import React, { useState } from 'react';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import React from 'react';
+import { ChevronRight } from 'lucide-react';
 
-interface SettingItemProps {
+interface SettingSectionProps {
   title: string;
-  items: { name: string; disabled?: boolean; content?: React.ReactNode }[];
+  items: {
+    name: string;
+    description?: string;
+    disabled?: boolean;
+    onClick?: () => void;
+  }[];
 }
 
-const SettingItem: React.FC<SettingItemProps> = ({ title, items }) => {
-  const [openItem, setOpenItem] = useState<string | null>(null);
-
+const SettingSection: React.FC<SettingSectionProps> = ({ title, items }) => {
   return (
-    <div className="bg-white rounded-lg p-5 mb-5">
-      <h2 className="text-xl font-medium mb-4">{title}</h2>
-      {items.map((item, index) => (
-        <div key={index}>
-          <div 
-            className={`flex justify-between items-center py-3 border-b border-gray-100 last:border-b-0 cursor-pointer ${item.disabled ? 'opacity-50' : ''}`}
-            onClick={() => !item.disabled && setOpenItem(openItem === item.name ? null : item.name)}
-          >
-            <span className={`text-base ${item.disabled ? 'text-gray-300' : 'text-black'}`}>{item.name}</span>
-            {openItem === item.name ? <ArrowLeft className="text-gray-400" size={20} /> : <ArrowRight className="text-gray-400" size={20} />}
-          </div>
-          {openItem === item.name && item.content && (
-            <div className="p-4 bg-gray-50 mt-2 rounded">
-              {item.content}
-            </div>
-          )}
+    <div className="bg-white rounded-[13px]">
+      <div className="p-5">
+        <div className="mb-4">
+          <h2 className="text-[20px] text-black font-medium font-['Rubik']">{title}</h2>
         </div>
-      ))}
+        <div>
+          {items.map((item, index) => (
+            <div 
+              key={index}
+              className={`flex items-center justify-between py-3 cursor-pointer ${
+                item.disabled ? 'opacity-20' : ''
+              }`}
+              onClick={!item.disabled ? item.onClick : undefined}
+            >
+              <div className="flex-1">
+                <span className="text-[16px] text-black font-normal font-['Rubik']">
+                  {item.name}
+                </span>
+                {item.description && (
+                  <p className="text-sm text-gray-500 font-['Rubik'] mt-0.5">
+                    {item.description}
+                  </p>
+                )}
+              </div>
+              <div className="flex items-center">
+                <ChevronRight 
+                  className="text-[#343A40] opacity-60 mr-2" 
+                  size={20}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
 
 const AccountPreferencesPage = () => {
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-2xl font-medium mb-6">Account preferences</h1>
-      
-      <SettingItem 
-        title="Profile information" 
-        items={[
-          { 
-            name: "Name, location, and industry",
-            content: <p>Edit your name, location, and industry details here.</p>
-          },
-          { 
-            name: "Personal demographic information",
-            content: <p>Manage your personal demographic information.</p>
-          },
-          { 
-            name: "Verifications",
-            content: <p>View and manage your account verifications.</p>
-          },
-        ]} 
-      />
+    <div className="w-full bg-[#F5F6F8] min-h-screen">
+      <div className="max-w-[789px]">
+        <div className="space-y-[17px]">
+          <SettingSection 
+            title="Profile information" 
+            items={[
+              { 
+                name: "Name, location, and industry",
+                onClick: () => console.log("Clicked name location")
+              },
+              { 
+                name: "Personal demographic information",
+                onClick: () => console.log("Clicked demographic")
+              },
+              {
+                name: "Verifications",
+                onClick: () => console.log("Clicked verifications")
+              },
+            ]} 
+          />
 
-      <SettingItem 
-        title="Display" 
-        items={[
-          { name: "Dark mode", disabled: true, content: <p>Dark mode is currently not available.</p> },
-        ]} 
-      />
+          <SettingSection 
+            title="Display" 
+            items={[
+              { 
+                name: "Dark mode",
+                disabled: true,
+              },
+            ]} 
+          />
 
-      <SettingItem 
-        title="General preferences" 
-        items={[
-          { 
-            name: "Language",
-            content: <p>Choose your preferred language for the platform.</p>
-          },
-          { 
-            name: "Showing profile photos",
-            content: <p>Manage visibility settings for profile photos.</p>
-          },
-        ]} 
-      />
+          <SettingSection 
+            title="General preferences" 
+            items={[
+              { 
+                name: "Language",
+                onClick: () => console.log("Clicked language")
+              },
+              { 
+                name: "Showing profile photos",
+                onClick: () => console.log("Clicked profile photos")
+              },
+            ]} 
+          />
 
-      <SettingItem 
-        title="Account management" 
-        items={[
-          { 
-            name: "Close account",
-            content: <p>Warning: Closing your account is irreversible. Please contact support if you're sure about this action.</p>
-          },
-        ]} 
-      />
+          <SettingSection 
+            title="Account management" 
+            items={[
+              { 
+                name: "Close account",
+                onClick: () => console.log("Clicked close account")
+              },
+            ]} 
+          />
+        </div>
+      </div>
     </div>
   );
 };

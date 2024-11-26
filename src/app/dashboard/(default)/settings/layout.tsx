@@ -39,38 +39,51 @@ export default function SettingsLayout({
   };
 
   return (
-    <div className="flex flex-1 bg-white">
-      <div className="w-76 h-[calc(100vh-60px)] border-r border-gray-200 p-4 flex flex-col">
-        <div className="flex items-center mb-10">
-          <Image src={user_circle} width={36} height={36} alt="User" />
-          <h1 className="text-2xl ml-3 font-normal">Settings</h1>
+    <div className="flex w-full min-h-screen bg-[#F5F6F8]">
+      {/* Left Sidebar */}
+      <div className="w-[300px] bg-white p-5 rounded-lg">
+        <div className="flex items-center gap-3 mb-8">
+          <Image
+            src={user_circle}
+            width={28}
+            height={28}
+            alt="Settings"
+            className="w-7 h-7"
+          />
+          <span className="text-2xl font-medium">Settings</span>
         </div>
         
-        {menuItems.map((item) => (
-          <div 
-            key={item.id}
-            className={`flex items-center p-3 rounded-lg cursor-pointer mb-2 ${
-              pathname === item.path || hoveredItem === item.id
-                ? 'bg-[#345AB8] text-white'
-                : 'hover:bg-gray-100'
-            }`}
-            onMouseEnter={() => setHoveredItem(item.id)}
-            onMouseLeave={() => setHoveredItem(null)}
-            onClick={() => handleItemClick(item.path)}
-          >
-            <Image
-              src={item.icon}
-              width={24}
-              height={24}
-              alt={item.text}
-              className={pathname === item.path || hoveredItem === item.id ? 'filter invert' : ''}
-            />
-            <span className="ml-3 text-base font-normal">{item.text}</span>
-          </div>
-        ))}
+        <div className="flex flex-col gap-1">
+          {menuItems.map((item) => (
+            <div
+              key={item.id}
+              className={`flex items-center gap-3 p-3 rounded-lg cursor-pointer 
+                ${pathname === item.path || hoveredItem === item.id
+                  ? 'bg-[#345AB8] text-white'
+                  : 'text-gray-700 hover:bg-gray-100'
+                }`}
+              onMouseEnter={() => setHoveredItem(item.id)}
+              onMouseLeave={() => setHoveredItem(null)}
+              onClick={() => handleItemClick(item.path)}
+            >
+              <Image
+                src={item.icon}
+                width={24}
+                height={24}
+                alt={item.text}
+                className={`w-6 h-6 ${pathname === item.path || hoveredItem === item.id ? 'filter invert' : ''}`}
+              />
+              <span className="text-base">{item.text}</span>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="flex-1 p-6">
-        {children}
+
+      {/* Main Content */}
+      <div className="flex-1 ml-6 mr-6">
+        <div className="w-full">
+          {children}
+        </div>
       </div>
     </div>
   );
