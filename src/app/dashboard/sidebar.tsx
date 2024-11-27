@@ -11,7 +11,6 @@ import ApplicationIcon from "@/assets/applicationicon";
 import SettingsIcon from "@/assets/settingsicon";
 import CollapseIcon from "@/assets/collapseicon";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
 	const [collapsed, setCollapsed] = useState<boolean>(false);
