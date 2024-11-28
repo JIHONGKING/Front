@@ -1,3 +1,4 @@
+import Applications from "../applications";
 export default function Page() {
-	return <div>Archive</div>;
+	return <Applications status="archive" />;
 }

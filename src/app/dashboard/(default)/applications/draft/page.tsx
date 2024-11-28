@@ -1,3 +1,4 @@
+import Applications from "../applications";
 export default function Page() {
-	return <div>Draft</div>;
+	return <Applications status="draft" />;
 }
